@@ -1,0 +1,47 @@
+commit 2f5cab8dc2e1db2e607a245ee69777a0a277e560
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 31 22:08:38 2016 -0400
+
+    Finished the assignment.
+
+commit 517191a56a29cc79462cef074b87a2e541ea3b71
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 31 20:14:52 2016 -0400
+
+    Changed name of parallelized code - typo present.
+
+commit 2bef575d849f81c452906a23e3d9906689caec1c
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 31 20:10:59 2016 -0400
+
+    Parallelized the second part of the assignment; both multi-file and single-file output.
+
+commit 38412268f7000d28a19e591f9658d6496145247c
+Author: Kamil Krawczyk <kamilk@gpc-f101n084-ib0.(none)>
+Date:   Wed Mar 30 21:34:16 2016 -0400
+
+    Parallelized the time evolution; runs now at 1.05s vs the original 2.5s.
+
+commit a4b8d7f3e5dbd6c54d51702a7f9f189f8deca0ea
+Author: Kamil Krawczyk <kamilk@gpc-f101n084-ib0.(none)>
+Date:   Wed Mar 30 20:57:26 2016 -0400
+
+    Added the requisite tag for compilation for OpenMP.
+
+commit 599fbba0889fa4be4e299cb182214fd6d1aec2bd
+Author: Ramses van Zon <rzon@scinet.utoronto.ca>
+Date:   Thu Mar 24 18:21:17 2016 -0400
+
+    Removed data file and executable
+
+commit 49606f81c0ee823335ffb60be68fcbe2eca6e675
+Author: Ramses van Zon <rzon@scinet.utoronto.ca>
+Date:   Thu Mar 24 18:17:56 2016 -0400
+
+    Now homework 9 for PHY1016 in 2016
+
+commit fe1eb33297c1617538a0636ab2744eac8728cf79
+Author: Ramses van Zon <rzon@scinet.utoronto.ca>
+Date:   Thu Mar 19 14:03:24 2015 -0400
+
+    Homework 2 of the High Performance Scientific Computing mini-course, using a 1d damped wave equation that is to be openmp-ed

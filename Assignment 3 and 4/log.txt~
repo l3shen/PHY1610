@@ -1,0 +1,77 @@
+commit 1ee520022b2b61fd8906d8f459db44efb4855d50
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 4 00:34:21 2016 -0500
+
+    Added ticktock functionality for the print/output function of my modularized code.
+
+commit 9d40282d76c0d7b5161b4cdee157e91175ff9f61
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 4 00:07:55 2016 -0500
+
+    Updated with new ticktock output names that are identical for both the modular and the original version. Modular version is faster than the original version. Cool!
+
+commit 789471ef4742b138f7d8886f7d653c4c016daf90
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 23:54:37 2016 -0500
+
+    Added ticktock library to modularized code; only for total time.
+
+commit 807fce5c9c8512158e1e4d071c01aa47f6dc621d
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 23:30:08 2016 -0500
+
+    Rewrote some of the timing commands for the original code; time outputs for both initialization steps and the overall simulation.
+
+commit 14bdc07872d2fa0c05f25826a30a287113f2a762
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:47:42 2016 -0500
+
+    Added a make file to compile both the modularized code and the original code.
+
+commit 4f447141016f0c319e64fdda8d7c25bd197d21f1
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:43:40 2016 -0500
+
+    Added the modularized code to the folder.
+
+commit 1f48adef7ddd9d4d5453ddc4feba4803b77a0e2b
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:28:04 2016 -0500
+
+    Testing the final counting of the new total number of ants at the end of the simulation loop.
+
+commit 4478a8b1526320c403260a171ea1795afd6db0d9
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:16:56 2016 -0500
+
+    Tested the calculation time of the new number of ants based on those that walk and those that stay.
+
+commit bae0262598457eb5b7899f513ec369959039856f
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 21:59:34 2016 -0500
+
+    Added ticktock to monitor the first part of the simulation - totaling the ants.
+
+commit c904e604696fcb0c457df403d4fc42c617e5e8e5
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 21:11:53 2016 -0500
+
+    Added ticktock monitoring to both initialization steps and the overal simulation.
+
+commit d7f33f705e71676b7cc8a2d0c439a536722b5226
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 20:59:10 2016 -0500
+
+    Implemented ticktock library in to original code. Compiling without make file for testing purposes.
+
+commit ddae15b1b7859d7cbe75fa9ca2f1588fad6adc7a
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 20:54:15 2016 -0500
+
+    Added ticktock library files; will begin to implement in original to test.
+
+commit 04a14028eb07beb5a0c2e6545aadcb0f9f8b35fa
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 20:53:11 2016 -0500
+
+    Git initialized; original ants script added.

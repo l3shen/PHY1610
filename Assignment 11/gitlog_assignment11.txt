@@ -1,0 +1,53 @@
+commit 272f2dead923de46e09b59226280848ee4a1062f
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Apr 14 15:23:18 2016 -0400
+
+    Finished cleaning up code. Done programming; will now begin with the report.
+
+commit 25684fe63f3f860508a8cd8c94931ec8787d7eb9
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 13 23:09:28 2016 -0400
+
+    Added two variables that contained array information for position and time.
+
+commit d0e27217fec2b20f3c26e1acce6c12318448da45
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 13 22:17:46 2016 -0400
+
+    Working! Wrong function was used; instead, nc_put_vara_TYPE was used! Output checked with ncview; looks good.
+
+commit 50b7284824f9af15f044ee735af632c17634d6e1
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 13 16:08:35 2016 -0400
+
+    All values in the .nc file are zero. No more seg fault present - an array I had made was missing its size and thus lead to the error.
+
+commit 3d118a482f87ac00049558ea7e0c76197da771dd
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 13 12:36:30 2016 -0400
+
+    Segmentation fault. Will debug.
+
+commit 9d49e41399a2c002d83f1503aa8644d924e79725
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Apr 12 15:03:33 2016 -0400
+
+    Added filename to reported values to console.
+
+commit ba1bffd8b1eec09c91f86ac3bae7563b2581521f
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Apr 12 15:00:31 2016 -0400
+
+    Fixed the extra quotation mark issue.
+
+commit c49aaf709286782f86a1f3561cb535d04e4b3c4b
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Apr 12 14:48:10 2016 -0400
+
+    Added filename to waveparams.txt; accidentally generates file with quotation marks around it. Will fix now.
+
+commit 8942bfd244503bf31ba30a38889a5fe3d0fbfa2d
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Apr 12 14:35:02 2016 -0400
+
+    Added NetCDF header file; will test to if xx or <xx> is needed.

@@ -1,0 +1,70 @@
+REPORT TIME!
+
+Let's talk about the three steps that we performed today.
+First, we the parallelization of the for loop responsible for time evolution. Prior to implementing OpenMP, 
+the original code took approximately 2.51074 s to run without graphics. Naturally, this varied a little bit
+each time it was run, but not too significantly.
+
+With implementation of OpenMP, the code took 0.785958 s, again with some variance. This is clearly faster!
+By utilizing more threads for the calculation, we can compute the requisite for loops faster and more efficiently
+than serial. Comparing the two output files via 'diff' in the terminal concludes that the files are the same.
+
+I then ran a quick profiling trial. I let the output frequency (outtime) to 10,000 and plotted the results (see
+plots.pdf for all three profiles). The walltime decreases with number of threads in an exponential manner, with 
+a relatively good improvement to efficiency, with 1 thread taking 2.63295 s and 8 threads taking 0.399723 s.
+
+Then, the code was parallelized to output multiple files. Rather than making an rarray for the file names, it was
+more effective to compare how making one file versus making eight files results changed the walltime. This was chosen
+because this is a direct comparison to making one file and filling it (as was done in the first part of the question);
+now we are making 8 at once and seeing if this is an improvement in computational time.
+In this case, an one-dimensional rarray of ofstreams was created, and then assigned a length based on the number of threads,
+which was calculated first. This was done to avoid initialization for each thread being run.
+
+During the printing/exporting step, I implemented parallelization again and the output that was performed by the thread
+was submitted to a data file appended by a number relative to the thread being used. Thus, 8 files were generated for the 
+8 threads that were used and each file, dubbed 'dataFile_parallelx.out', where x is the thread that was used.
+
+Cool - now let's quickly talk about the good and the bad about this method:
+Good - improved speeds! With 8 threads and the standard waveparams.txt settings, the program took 0.466617 s to run.
+We definitely see an improvement in speed when running the program (at the standard settings given in waveparams.txt).
+
+Bad - file management issues. Each file will have chunks of the data, but since each thread does not run at the same time, 
+the data itself will be divided over multiple files, perhaps out of order (i.e. dataFile_parallel1 won't have data that precedes
+dataFile_parallel2, necessarily). For the purpose of a graph, this is OK, as all the data points will be plotted either way
+and the resultant curve will be the same. But for the sake of time, this involves greater post-processing if you did want to
+have a linear set of data like one would get without outputting to multiple files.
+
+In terms of profiling, setting the output frequency to 0.1, and testing over 8 cores, we also see an exponential decrease in walltime,
+meaning there is an asymptote of speed we can attain, but an overall healthy improvement in speeds (see plots.pdf).
+
+This is the most involved step - it requires the most code to be added in order to work.
+
+For the second parallelzation of the program, in which we parallelized the output to a single file, we found that the speed
+of running the program at the original wave parameters, was 0.835895 s, which is not as fast as just parallelizing the 
+time step (even though this includes the parallelized time step). This is to be expected, as in this case, we are waiting
+for each core to complete its task prior to having the next core perform its task. This is because we had employed the 
+critical OpenMP compiler directive, as atomic would not work (namely because the << operator is binary, and not supported,
+according to Intel's database on OpenMP). 
+
+The good parts about this -
+The program will export a file that is identical to the original code, as confirmed by running $ diff on both output files.
+The speed is not too bad, and at times, can be an improvement, as the first modularized code take up to 1.0 s to run when
+SciNet execution was being slow. 
+
+The bad -
+Clearly it is not as fast, and there is a bottleneck in waiting for each thread to finish its task prior to engaging the next
+one.
+
+A scaling analysis shows that the efficiency of this method is the poorest; there is little improvement in walltime
+versus number of threads, and certainly does not appear to be exponential (check plots.pdf) - however, there is an improvement,
+but clearly not as stark.
+
+This is much easier to code than the first step, and provides only a simple singular output file, albeit the fact that it does
+not scale as well with the number of cores.
+
+In conclusion, parallelization greatly improves walltime, albeit the implementation of it must be tuned to the purpose of the code.
+The best option, I feel, is the parallelization of output to a single file. It is much faster than serial, but not as fast as multiple
+output files - however, this results in less post-processing required for the file aftewards.
+
+Note: the data is included in plot.pdf, which is a mere pdf copy of a spreadsheet.
+

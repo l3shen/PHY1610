@@ -1,0 +1,226 @@
+PART UN: The Walkers
+First question: how many walkers do you need to get to equivalence between the two methods (diffusion and Monte Carlo)?
+
+Initially we had set our number of walkers to 1000 for the MC simulation. The resultant output:
+   Step   Time    Walltime(s) Profile
+      0   0.0000     0.0009   █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   1250   5.0000     0.0764   ▆▇▆▇▆▇▆▄▅▃▃▁▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▃▂▃▃▄▅▄▄▆█▇
+   2500  10.0000     0.1509   ▆▇▆▇▆█▆▅▄▅▄▄▄▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▃▄▃▃▄▅▅▄▆▆▇▆▆
+   3750  15.0000     0.2224   ▇▆▆▇▆▅▆▅▅▄▄▄▄▃▂▂▂▂▂▂▁▂▁▁▁▁▁▂▂▂▂▂▂▃▄▃▃▄▃▄▄▅▅▆▄█▄▄
+   5000  20.0000     0.2917   ▇▇▆▄▆▅▇▇▅▄▅▄▃▃▅▃▃▃▄▄▂▂▂▂▃▂▂▃▂▃▂▃▃▄▄▅▂▅▃▄▆▆▆▆▅▅▇█
+   6250  25.0000     0.3617   ▆▆▅▆▆█▅▇▄▅▄▆▃▅▅▃▄▄▄▄▃▂▄▄▄▂▃▃▂▃▃▃▄▃▃▃▄▄▃▆▇▆▃▆▅█▅▅
+   7500  30.0000     0.4258   ▇▆▆█▆▆▇▆▇▄▆▅▄▅▄▆▅▅▆▄▄▃▄▅▅▄▃▃▄▃▄▅▄▅▄▄▅▄▆▇█▅▅▅▇▆▇▄
+   8750  35.0000     0.5029   ▅▅▅▅█▄▇▅▆▆▅▅▅▄▄▄▄▆▄▄▇▅▅▄▄▄▃▃▄▂▄▇▅▃▅▄▆▅▅▄▅▆▅▅▄▅▇▅
+  10000  40.0000     0.5798   █▆▅▅▆▆▅▇▄▅▆▆▄▅▅▆▆▅▅▄▆▅▃▆▄▄▄▄▅▅▄▆▆▄▅▂▇▅▅▄▄▅▅▅▆▅▆▇
+  11250  45.0000     0.6543   ▆▄▄█▄▄▅▆▆▅▅▃▆▄▄▅▄▇▅▄▄▅▃▄▆▅▆▃▅▄▅▄▄▄▄▅▅▄▄▄▅▄▆▅▇▆▅▆
+  12500  50.0000     0.7374   ▆▆▃▆▃▆▆▆▇▅█▃▅▃▅▄▆█▆▄▅▅▄▄▄▅▄▅▄▆▆▃▄▄▅▅▅▅▇▄▅▄▆▅▆▄▅▇
+  13750  55.0000     0.8148   ▅▅▆▅▄▆▅▅▆▅▆▇▄▇▅▅▃▆▆▄▄▅▆▄▆▄▅▆▆▄▄▅▅▅▆▆▄▄▄▅▄▆▄▆▄▅▅█
+  15000  60.0000     0.8905   ▄▆▄▇▆▆▅▆▄▄▅▆▆▄▆▅▆▄▅▅▃▅▇▅▅▅▅▅▅▄▄▆▆█▄▇▆▄▅▅▆▇▅▅▄▆▆▆
+  16250  65.0000     0.9649   ▅▅▅▇▄▄▅▅▅▆▃▄▅▅▄▅▆▅▄▅▄▅▇▅▅▆▆▄▅▄▄▆▄▆▆▅▅▄▆▅▅▄█▄▆▅▅▆
+  17500  70.0000     1.0401   ▄▆▅▅▅▄▄▅▄▅▇▅▄▄▄▅▄▆▄▆▆▅▅▅▇▄▅▅▄▆▄▆▆▂▄█▆▅▅▆▆▆▅▆▆▅▆▆
+  18750  75.0000     1.1200   ▅▄▅▆▄█▆▅▃▄▅▇▅▇▅▇▅▆▇▅▆▆█▇▅▇▆▅█▅▅▇▆▆▆▅▇▄▅▆▆▆▇▇▆▆▆▇
+  20000  80.0000     1.1965   ▅▄▆▆▄▄▅▅▆▆▆▆▇▃▅▄▄▅▅▆▄▆▅▆▅▇▅█▄▄▅▆▅▇▄▄▄▄▅▅▅▄▆▅▄▅▅▆
+  21250  85.0000     1.2845   ▆▅▅▆▄▆▄▄▃▄▅▇▄▅▆▆▅▅▅▅▅▅▅▄▄█▄▅▅▄▅▅▇▅▅▅▆▅▄▅▅▅▄▄▅▆▅▄
+  22500  90.0000     1.3579   ▄▆▆▄▅▆▅▄▃█▅▅▅▇▆▆▅▆▆█▄▃▆▅▅▆▆▇▆▅▅▅▆▅▆▅▅▅▄▅▄▄▆▆▅▅▅▆
+  23750  95.0000     1.4349   ▃▅▅▆▅▅▆▅▆▄▄▅▆▅▆▄▆▅▄▅▇▄▅▅▆▄▆▆▆▇▇▅▅▆▅▅▆▅▆▄▅▅▅▄▅▂▄█
+  25000 100.0000     1.5076   ▅▄▅▃▅▅▅▄▄▃▆▅▅▄▅█▅▅▃▄▄▅▃▆▄▆▆▆▆▅▆▅▄▄▅▇▅▄▆▄▆▄▇▆▄▃▇▅
+
+Comparing that to the density field output from the PDE method (there may be a slight font error):
+   Step   Time    Walltime(s) Profile
+      0   0.0000     0.0006   █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   1250   5.0000     0.0382   ███▇▇▆▅▅▄▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▃▃▄▅▅▆▇▇███
+   2500  10.0000     0.0716   ████▇▇▇▆▆▅▅▄▄▃▃▃▂▂▂▂▂▂▁▁▁▁▂▂▂▂▂▂▃▃▃▄▄▅▅▆▆▇▇▇████
+   3750  15.0000     0.1084   █████▇▇▇▆▆▆▅▅▅▄▄▄▃▃▃▃▂▂▂▂▂▂▃▃▃▃▃▄▄▄▅▅▆▆▆▇▇▇█████
+   5000  20.0000     0.1447   █████▇▇▇▇▆▆▆▆▅▅▅▄▄▄▄▄▃▃▃▃▃▃▄▄▄▄▄▅▅▅▆▆▆▆▇▇▇▇█████
+   6250  25.0000     0.1826   ██████▇▇▇▇▇▆▆▆▆▅▅▅▅▅▅▄▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▇▇▇▇▇██████
+   7500  30.0000     0.2218   ███████▇▇▇▇▇▇▆▆▆▆▆▆▅▅▅▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███████
+   8750  35.0000     0.2469   ████████▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇████████
+  10000  40.0000     0.2998   ██████████▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇█████████
+  11250  45.0000     0.3128   ███████████▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇███████████
+  12500  50.0000     0.3475   ██████████████▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇██████████████
+  13750  55.0000     0.3897   ██████████████████▇▇▇▇▇▇▇▇▇▇▇▇▇█████████████████
+  15000  60.0000     0.4321   ████████████████████████████████████████████████
+  16250  65.0000     0.4802   ████████████████████████████████████████████████
+  17500  70.0000     0.5095   ████████████████████████████████████████████████
+  18750  75.0000     0.5406   ████████████████████████████████████████████████
+  20000  80.0000     0.5779   ████████████████████████████████████████████████
+  21250  85.0000     0.6216   ████████████████████████████████████████████████
+  22500  90.0000     0.6586   ████████████████████████████████████████████████
+  23750  95.0000     0.6903   ████████████████████████████████████████████████
+  25000 100.0000     0.7303   ████████████████████████████████████████████████
+
+We can see that the MC result bears a passing resemblance to that of the diffusion profile of the PDE method. However,
+upon increasing the number of walkers, it became evident qualitatively that the distribution of the walkers on the ring began
+to bear a much greater equivalence to the density field of the PDE method. For example, at 10,000 walkers:
+   Step   Time    Walltime(s) Profile
+      0   0.0000     0.0074   █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   1250   5.0000     0.4075   ▇▇█▇▆▅▅▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▃▃▄▄▅▆▇▇▇▇
+   2500  10.0000     0.8240   ▇▇▇▆▇▆▆▆▅▅▄▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▃▃▃▅▅▅▆▆▇▇█▇▇
+   3750  15.0000     1.2481   █▇▇▇▆▇▅▆▆▅▅▄▄▄▃▃▂▃▂▂▂▂▂▂▂▂▂▂▂▂▂▃▃▃▄▄▄▄▅▅▆▆▆▆▇▆▇▇
+   5000  20.0000     1.6421   ▇▇█▇▇▆▆▇▆▆▆▅▅▅▄▄▄▄▄▃▃▃▃▂▃▃▃▃▃▃▄▃▄▄▅▅▅▅▅▆▆▇▆▇▇▇▇▇
+   6250  25.0000     2.0397   ▇▇▇█▇▇▇▇▇▆▆▆▆▅▅▅▅▅▄▄▄▄▄▃▄▄▄▄▄▄▄▄▅▅▅▆▅▆▆▆▇▇▇▇▇▇▇▇
+   7500  30.0000     2.4505   ▇▇▇▇▇▇▇▇▆▅▆▆▆▅▅▅▅▅▄▅▅▄▅▅▅▄▅▅▅▅▅▅▅▄▅▆▅▆▆▆▆▇▇▇▇▇▇█
+   8750  35.0000     2.8380   ▇█▇▇▆▇▇▆▆▇▆▆▅▆▆▆▆▅▆▅▅▅▅▅▄▅▅▅▅▆▅▆▅▆▆▅▆▆▇▆▇▇▇▇▇▇▇▇
+  10000  40.0000     3.2371   ▇▆▇▇▇▇█▆▆▆▆▆▆▆▆▅▆▆▅▆▆▆▅▆▅▅▅▅▆▆▆▅▆▆▆▆▇▆▆▇▆▆▆▆▇▇▇▆
+  11250  45.0000     3.6404   ▆▇▆▇▆█▆▆▆▇▆▇▆▅▆▆▆▆▆▆▆▆▇▆▆▆▆▆▆▆▆▅▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▆
+  12500  50.0000     4.0297   ▇▇▇▇▇▇▇▇▇▇▇▆▇▆▇▆▆▆▇▆▆▆▇▇▆▆▆▆▆▆▆▆▇▆▇▇▆▇▆▆▇▇▆▇▇█▇▆
+  13750  55.0000     4.4285   ▇▇▇▆▆▆▆▇▇▆▆▇▇▆▇▆▆▅▆▆▆▇▇▆▆▆▆▆▆▆▆▆▇▆▆▆▆▆█▆▆▇▇▇▇▆▆▇
+  15000  60.0000     4.8307   ▇▇▇▆▇▇▇▇▆▇▆▇▇▇▇▇▇▇▇▆▇▆▇▇▆▇▆▇▆▆▇▆▆▆▇▆▇▇▇▇▆█▇▇▇▇▇▇
+  16250  65.0000     5.2237   ▆▆█▆▆▆▇▆▆▆▇▇▅▆▇▆▆▆▆▆▆▆▅▆▆▅▆▆▆▇▆▆▆▆▆▆▆▆▆▆▆▇▆▇▇▆▆▆
+  17500  70.0000     5.6204   ▇▆▇▇▆▇▇▇▆▇▇▇▇▆▆▇▆▆▇▇▇▇▆▇▆▇▆▇▆▆▇▆▇▆▆▇▇▇▆▇▇▇█▆▇▇▇▇
+  18750  75.0000     6.0167   ▆▆▇▆▇▇▆▇▆▆▆▆▆▆▆▇▇▆▇▆▆▆▆▆▆▆█▆▆▆▆▆▆▆▇▆▇▆▇▇▆▆▆▆▆▆▆▇
+  20000  80.0000     6.4157   ▆▇▇▇▆▆▇▇▆▇▆▇▆▇▇▇▆▆▇▇▆▆▇▆▇▆▇▇█▆▆▇▆▇▆▇▆▇▇▇▆▇▆▇▇▇▆▇
+  21250  85.0000     6.8131   ▇▆▇▇▇▆▆▇▇▆▇▇▇▇▆▇▆▇▇▆▇█▇▇▆▇▇▆▆▆▇▆▆▇▆▇▆▆▇▇▆▇▆▇▇▆▇▇
+  22500  90.0000     7.2037   ▆▇▆▆▆▇▆▇▆▆▆▇▆▆▇▇▆▇▇▆▇▆▆▆▆▆▇▆▆▆▆▆▆▆▆▆▆█▆▇▆▆▆▆▆▆▆▆
+  23750  95.0000     7.5815   ▇▇▆▇▇▇▇▆▆▇▇█▇▇▇▆▇▇▇▆▇▇▆▆▇▆▇▆▇▇▆▇▇▆▇▇▇▇▇▆▇▇▆▇▆▇▇▇
+  25000 100.0000     7.9801   ▆▆▇▆▇▇▇▇▇▇▇▇▆▇▇▇▆▇▇▇▇▆▆▆▇▇▇▇▆▇▇▆▇▆█▇▇▇▇▆▇▆▇▇▆▇▆▆
+
+It looks much better now. However, there's also a ten-fold increase in computation time! Let's try 30,000 walkers:
+   Step   Time    Walltime(s) Profile
+      0   0.0000     0.0436   █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   1250   5.0000     1.1631   █▇▇▆▆▅▅▄▃▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▃▃▄▅▅▆▆▇▇▇
+   2500  10.0000     2.2843   █▇▇▇▇▆▆▅▅▅▄▄▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▃▃▃▄▅▅▅▆▆▇▇▇▇▇
+   3750  15.0000     3.4033   ▇▇█▇▇▆▆▆▅▅▅▅▄▄▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▃▃▃▄▄▄▅▅▅▅▆▆▇▇▇▇▇
+   5000  20.0000     4.5232   ▇▇▇▇▇▆▇▆▆▆▅▅▅▅▄▄▄▄▃▃▃▃▃▃▃▃▃▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▇▇▇▇█
+   6250  25.0000     5.6600   █▇▇▇▇▆▇▆▆▆▆▆▅▅▅▅▅▄▄▄▄▄▄▃▄▄▄▄▄▄▄▄▅▅▅▆▅▆▆▆▆▆▇▇▇▇▇▇
+   7500  30.0000     6.8067   ▇▇▇▇▇▇▇▇▆▆▆▆▅▆▅▅▅▅▅▅▅▄▄▄▄▄▅▅▅▅▅▅▅▆▅▆▆▆▆▆▆▇▇▇▇▇▇█
+   8750  35.0000     7.9246   █▇▇▇▇▇▇▆▆▆▇▆▆▆▆▆▅▅▆▆▅▅▅▅▅▅▅▅▅▅▅▆▅▅▆▆▆▇▆▇▆▇▇▇▇▇▇▇
+  10000  40.0000     9.0402   █▇▇▇▇▇▇▇▆▇▇▇▆▆▇▆▆▆▆▆▆▅▆▅▆▆▆▆▆▆▆▆▆▆▆▆▆▇▆▇▇▇▇▇▇▇▇▇
+  11250  45.0000    10.1409   ▇▇▇▆▆▇▇▇▇▆▇▆▆▆▆▇▆▆▆▆▆▆▆▆▆▆▆▅▆▆▆▆▆▆▆▇▆▆▆▆▆▇▇▇█▇▇▇
+  12500  50.0000    11.2739   ▇▇▇█▇▇▇▇▇▆▆▆▇▇▇▇▇▇▇▆▆▆▆▆▆▇▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  13750  55.0000    12.3898   ▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▇▇▆▆▇▇▇▇▇▇▆▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  15000  60.0000    13.5239   ▇▇▇█▇▇▇▇▇▆▇▇▆▇▇▆▇▇▇▇▇▆▇▇▇▇▇▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  16250  65.0000    14.6489   ▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▆▇▆▇▇▆▇▇▇▇▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  17500  70.0000    15.7696   ▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  18750  75.0000    16.8936   ▇▇▇▆▇▇▇▆▇█▇▇▇▇▆▇▆▆▆▆▇▇▇▆▆▇▆▆▆▆▇▇▆▇▇▇▇▇▆▇▇▇▇▇▆▆▇▇
+  20000  80.0000    18.0100   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  21250  85.0000    19.1270   ▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▆▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▆▇▆▇▇▆▇▇▇▇▇▇▇
+  22500  90.0000    20.2451   ▇▇▇▇▆▇▇▇▇▇█▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  23750  95.0000    21.4019   ▇▇▇▇▇▇▇▆▇▇▇▇▇▇█▇▇▇▇▆▇▇▇▇▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▆▇▇▇▆▇▆▆▇
+  25000 100.0000    22.5296   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▇▆▇▇█▇▇▇▇▇▇▆▇▇▇▇▇▇▇▆
+
+Not that much of a difference again, but with three-fold incrase in computation time. It seems evident that the computation times
+scale linearly with increasing number of walkers. For funsies, let's try ten thousand and ten million:
+   Step   Time    Walltime(s) Profile
+      0   0.0000     0.1113   █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   1250   5.0000     3.7971   █▇▇▇▆▅▅▄▃▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▃▃▄▅▅▆▇▇▇▇
+   2500  10.0000     7.5427   █▇▇▇▇▆▆▅▅▅▄▄▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▃▃▃▄▄▅▅▆▆▇▇▇▇▇
+   3750  15.0000    11.5425   █▇▇▇▇▇▆▆▆▅▅▅▄▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▃▃▃▄▄▅▅▅▆▆▆▇▇▇▇▇▇
+   5000  20.0000    15.6002   █▇▇▇▇▇▇▆▆▆▅▅▅▅▄▄▄▃▃▃▃▃▃▃▃▃▃▃▃▃▄▄▄▄▄▅▅▅▆▆▆▆▇▇▇▇▇▇
+   6250  25.0000    19.3461   ▇▇▇▇▇▇▇▇▆▆▆▆▅▅▅▅▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇█
+   7500  30.0000    23.1002   ▇▇▇▇▇▇▆▇▇▆▆▆▆▆▅▅▅▅▅▅▅▅▅▅▄▅▅▅▅▅▅▅▅▆▅▆▆▆▆▇▇▇▇▇▇█▇▇
+   8750  35.0000    27.1821   ▇▇▇▇▇▇▇▇▇▇▇▆▇▆▆▆▆▆▅▆▅▅▅▅▅▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇█▇▇
+  10000  40.0000    31.2409   █▇▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▅▆▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇
+  11250  45.0000    34.9712   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇
+  12500  50.0000    38.7478   ▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  13750  55.0000    42.5482   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇
+  15000  60.0000    46.3306   ▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  16250  65.0000    50.1084   ▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  17500  70.0000    53.8771   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇
+  18750  75.0000    57.6609   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇
+  20000  80.0000    61.4234   ▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  21250  85.0000    65.1654   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇
+  22500  90.0000    68.8629   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇
+  23750  95.0000    72.5610   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  25000 100.0000    76.2784   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇
+
+   Step   Time    Walltime(s) Profile
+      0   0.0000     9.6160    █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   1250   5.0000   490.5141    █▇▇▇▆▅▅▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▃▃▄▅▅▆▆▇▇▇
+   2500  10.0000   971.6891    ▇▇▇▇▇▆▆▅▅▅▄▄▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▃▃▄▄▄▅▅▆▆▇▇▇▇█
+   3750  15.0000   1452.7602   █▇▇▇▇▇▆▆▆▅▅▅▄▄▄▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▃▃▃▃▄▄▅▅▅▆▆▆▇▇▇▇▇▇
+   5000  20.0000   1934.5572   █▇▇▇▇▇▇▆▆▆▆▅▅▅▄▄▄▄▃▃▃▃▃▃▃▃▃▃▃▃▄▄▄▄▅▅▅▆▆▆▆▇▇▇▇▇▇▇
+   6250  25.0000   2416.2135   █▇▇▇▇▇▇▇▆▆▆▆▆▅▅▅▅▄▄▄▄▄▄▄▄▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▇▇▇▇▇▇▇▇
+   7500  30.0000   2897.5412   █▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇
+   8750  35.0000   3378.4669   ▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▅▅▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇█
+  10000  40.0000   3860.0969   █▇▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  11250  45.0000   4341.4011   █▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  12500  50.0000   4822.8024   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇
+  13750  55.0000   5303.5816   █▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  15000  60.0000   5784.3388   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█
+  16250  65.0000   6265.1053   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇
+  17500  70.0000   6745.9017   █▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  18750  75.0000   7226.7182   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇
+  20000  80.0000   7707.4565   ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇
+  21250  85.0000   8188.1937   ▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  22500  90.0000   8668.9501   ▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  23750  95.0000   9149.7064   ▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+  25000 100.0000   9630.4577   ▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+
+We can see that the difference between 100,000 and 10 million is hardly noticeable, and even compared to 30,000 there is
+little change to the general 'profile' that the eye perceives. The profile at 10 million looks almost identical to that 
+of the diffusion method, which is remarkable - but look at the computation time, youch!
+
+In conclusion, I would say that around 20,000 - 30,000 walkers there is a relatively good equivalence between both methods.
+
+PART DEUX: What I Did
+
+For the PDE method:
+
+I began by first discretizing a matrix in the exact same method that was outlined in class, utilizing Euler time steps,
+etc., we find that we have a symmetric matrix that is basically identical to that of the lecture (as the PDE used for the
+example, temperature, is the same as the on given to us for the density). 
+
+The issue, however, was the boundary conditions. It would have been nice to take the same ones that were given, but since we 
+are on a ring this time and not a line, it required a bit more thinking to figure out exactly what to define our boundary conditions.
+If, for example, you were to place 'portals' at the end of a line, connecting both ends, you would effectively create a 'loop', or circle,
+and as awkward as the analogy may be, it works well to describe our situation. Thus, at the first boundary condition, the alpha term is 
+present, albeit at the other 'end' of the line, to describe a ring.
+
+i.e. our matrix:
+
+[ 1 - 2a, a, 0, 0, 0, ...., 0, 0, a] - First Boundary
+[0, a, 1 - 2a, a, 0, 0, ...., 0, 0, 0]
+                 ....
+[0, 0, 0, 0, ... 0, 0, a, 1 - 2a, a, 0]
+[a, 0, 0, 0, 0, ... 0, 0, 0, a, 1 - 2a] - Second Boundary
+
+These conditions were then included in our code. To compute the density field matrix time step, we use CBLAS to compute the result of 
+multiplying the derivative matrix, F, and the probability matrix, P, to find our next time step, P_new (in my added code).
+
+Without in to going to much detail, I used cblas_dsymv as the matrix was symmetric; beforehand, the matrix was filled (diagonal and off-
+diagonal terms) using the given values of diagonal (1 - 2a) and off-diagonal (a) terms, where a = alpha = D*dt/(dx^2).
+
+This then calculate how the probability matrix changed with iterated time steps (discretized with time), and we see how that evolves
+in a pretty picture.
+
+For the Monte Carlo method:
+
+Similarly, this was figured out by adopting an example from class (a mix of the traffic and the coin-toss example).
+
+First, we had to generate a random number. From how I understand it, Monte Carlo works by comparing a randomly generated number
+to a probability to decide what the next step is. So, using the random library, default_random_engine was utilized with a uniform 
+distribution of real numbers. A uniform distribution was chosen over a Gaussian/normal distribution, as this allows us to the same
+chance of generating a random number anywhere between 0 and 1, whereas the normal distribution will have a definite lean towards a
+particular value that the Gaussian centers around. 
+
+After using our RNG to generate a random number (which was done each iteration of the walker movement), the number, r, was then
+compared to the probability determined by the eqn. given in the homework PDF. 
+
+The probability of moving to the left is p, the probability of moving to the right is p, and thus the probability of moving, in general,
+is 2p. The probability of not moving is thus 1 - 2p.
+
+We can set some exclude/include cases to then turn in to if/elseif loops to generate movement:
+If ]0 p] (if r is greater than 0 or less than or equal to p), then there is movement to the left.
+If ]p 2p] (if r is greater than p or less than or equal to 2p), then there is movement to the right.
+If ]2p 1] (if r is greater than 2p or less than or equal to 1), there is no movement.
+
+This was then turned into a series of conditionals that then shifted the position of the walker, which was stored in an array vector, by 1, -1, or 0,
+and accounted for the boundary conditions (i.e. if it was on the 'edge' of the line I had mentioned earlier, it would 'teleport' to the other edge,
+to emulate a ring). This was done for each walker, and thus, the Monte Carlo program has discretized time AND position steps, dictating by the 
+random number generator and probabilities.
+
+PART TROIX: What Do I Like Best?
+
+Realistically? I much prefer the PDE method and the use of probability density matrices. Why? It's fast, it works, the graph is pretty, and for 
+a generally simple case like this ring, it works and probably results in some relatively accurate (for the modeL) results. It is also very 
+low on computation time and overhead, and the programming is very easy, as it's just simple matrix multiplication, ultimately.
+
+However, I do think the Monte Carlo method is much cooler; I wish I could use it, but sadly, to get a somewhat similar representation, it requires a 
+huge amount of walkers and that leads to really high computation times and outputs that aren't as 'pretty' or potentially accurate as the 
+PDE method. However, if we had an infinite amount of walkers (and therefore infinite computation time), we certainly would have perfect 
+convergence between the two methods. But we don't. 
+
+I'd love to use Monte Carlo in a more applicable case, like a situation that isn't as simple as a ring, where random movement could model the surface 
+better. But as for a ring, it's clear that the PDE method works best.
+

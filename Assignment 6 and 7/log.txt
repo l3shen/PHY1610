@@ -1,0 +1,83 @@
+commit 78611a08a6fb327febee7811a0aeabebbcbf390f
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 20:59:46 2016 -0500
+
+    Finished! Added final touches and commented the rest of the code.
+
+commit 8c2b1082162cad56f75ae469188d57b316fd7287
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 20:02:49 2016 -0500
+
+    Added a print function; included it in the highest_value header and source code.
+
+commit abebaec6c4b8a9955ba07ea77929fd5db38cdc09
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 19:55:52 2016 -0500
+
+    Added a sorting function to output the 5 best fits.
+
+commit d12e570bd57c6e656d671d91961e36c824ff8a50
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 12:26:55 2016 -0500
+
+    Generated a make file. No more annoying terminal commands.
+
+commit bc0ea6b76baa9da61adf97e66613693256f1a056
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 02:28:15 2016 -0500
+
+    Created a function for the calculation of the power spectrum so it is not done within the main loop of the driver code.
+
+commit b1c5a9a7ff34160f2acb33139907c6099af36c70
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 02:19:27 2016 -0500
+
+    Added a function that determines the file name and creates an appropriate string for analysis.
+
+commit 3c92ace7def3b5435852626d5dc5c024d581d06f
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 10 01:23:48 2016 -0500
+
+    Finally got the program working properly! No more error in iterating over all the files.
+
+commit 21e851640d90d43c729e9db911d2783e618d07bb
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Mar 9 20:15:15 2016 -0500
+
+    Implemented correlation code; tested on prediction and one data set. Seems to provide a plausible answer. Will try to include a for loop to go through all data prior to modularization of the remainder of the code.
+
+commit a4955eb25059fd530e6c57a6e073391766f79477
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Mar 9 18:18:03 2016 -0500
+
+    Added in a power spectrum calculation. Works great!
+
+commit 02f6fc0a007fb03afc8525956e3ca2c17a29535a
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Mar 8 21:51:00 2016 -0500
+
+    Removed unnecessary comments from driver code.
+
+commit 4eed3dc82abe7a73e234f51c31406ab0e82fb8b0
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Mar 8 21:50:16 2016 -0500
+
+    Created a function for the FFTW process; tested and works.
+
+commit 4a91615e8d4a5b2df81cb53a5b5dc8dfb601c649
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Mar 8 20:47:09 2016 -0500
+
+    Added functionality for reading the various file names. So far so good!
+
+commit 21910ed644a99631e718dd28258498bb467285ba
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Mar 8 20:29:40 2016 -0500
+
+    Tested driver out; indeed prints - albeit a very large value of numbers, as expected. I feel like I am in the Matrix.
+
+commit 5676bd45e75cee81ef4f7065b98c9dcc20d64fcd
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Mar 8 20:24:22 2016 -0500
+
+    First commit. Created a file reader script and began writing a quick driver script.

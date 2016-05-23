@@ -1,0 +1,43 @@
+Welcome to the gravitational waves correlation coefficient calculator!
+The detected signal file number and the correlation coefficient to the predicted signal:
+
+File number: 1. The correlation coefficient: 0.939055
+File number: 2. The correlation coefficient: 0.887038
+File number: 3. The correlation coefficient: 0.749303
+File number: 4. The correlation coefficient: 0.612952
+File number: 5. The correlation coefficient: 0.552329
+File number: 6. The correlation coefficient: 0.433699
+File number: 7. The correlation coefficient: 0.340906
+File number: 8. The correlation coefficient: 0.287609
+File number: 9. The correlation coefficient: 0.324875
+File number: 10. The correlation coefficient: 0.432781
+File number: 11. The correlation coefficient: 0.527679
+File number: 12. The correlation coefficient: 0.639159
+File number: 13. The correlation coefficient: 0.744845
+File number: 14. The correlation coefficient: 0.859163
+File number: 15. The correlation coefficient: 0.967221
+File number: 16. The correlation coefficient: 0.071921
+File number: 17. The correlation coefficient: 0.896847
+File number: 18. The correlation coefficient: 0.87365
+File number: 19. The correlation coefficient: 0.727012
+File number: 20. The correlation coefficient: 0.99222
+File number: 21. The correlation coefficient: 0.529308
+File number: 22. The correlation coefficient: 0.406748
+File number: 23. The correlation coefficient: 0.335255
+File number: 24. The correlation coefficient: 0.27105
+File number: 25. The correlation coefficient: 0.345294
+File number: 26. The correlation coefficient: 0.436053
+File number: 27. The correlation coefficient: 0.528535
+File number: 28. The correlation coefficient: 0.629183
+File number: 29. The correlation coefficient: 0.730712
+File number: 30. The correlation coefficient: 0.652491
+File number: 31. The correlation coefficient: 0.435728
+File number: 32. The correlation coefficient: 0.320668
+
+The top five correlations, their file index, and their correlation coefficients:
+#1; The file number is: 20 The correlation coefficient is: 0.99222
+#2; The file number is: 15 The correlation coefficient is: 0.967221
+#3; The file number is: 1 The correlation coefficient is: 0.939055
+#4; The file number is: 17 The correlation coefficient is: 0.896847
+#5; The file number is: 2 The correlation coefficient is: 0.887038
+

@@ -1,0 +1,71 @@
+Assignment 10 Writeup:
+
+* I apologize if the formatting of the code is funny - scp directly from SciNet to my local machine seems to change the 
+formatting, especially after using Nano in the terminal.*
+
+First, I will address an error that was "corrected" for in the original script:
+The integer ngrid, which calculates the number of x positions in the 'grid' (i.e. withholding the boundaries), was defined
+as (x2 - x1)/dx. However, if we took, let's say, -26 and 26 as our two x values, and had a step size of, 4, we would have
+(26 - -26)/4 = 13. If this was drawn out, we'd see that indeed we would have one too many grid cells! We should have 14
+overall x positions, with the two edges being the boundaries. Thus, ngrid should be 12, not 13. To correct for this,
+1 was subtracted from the overall calculation to account for the extra cell in the previous equation.
+Now, this doesn't necessarily affect the assignment as a whole, but this was noticed and changed for peace of mind's sake. One
+must alter the original code in the same manner (plus a few other minor tweaks) to be able to have the same data. I didn't do too
+much tweaking of the original, but the values matched; it's getting late and I felt my time to do the work was better spent on the
+rest of the assignment, heh.
+
+Comparison of the dataFiles appeared to show the same data (i.e. by comparing like time points to the serial output); furthermore, the
+plots looked good and exactly like the serial code - I did not run diff on the outputs due to the fact that they did not match exactly,
+but qualitatively it seems good!
+
+Moving on:
+In this assignment, MPI was utilized to split the work load of the calculation to a desired amount of processors. How this was done, 
+simply put, was to find a way to allocate a series of local ngrids, each corresponding to a particular rank (or processor). The signal,
+rho, was also modified in this manner. Afterwards, the time steps were performed for each local ngrid and then pieced together; this was made
+evident in the graphical output of the program, as you'd see that the shapes were indeed similar. This was done by, as mentioned, assigning
+a portion of the calculation to each processor, with communicaton in between to ensure boundaries were met.
+
+The long story:
+The first process was to determine the number of grid points per processor. The modulus is a helpful attribute for this particular task;
+as you can imagine, having a grid size that is divisable by the number of processors with no remainder means that each processor will
+be able to share the workload. We can then calculate the local amount of grid points per processor. How about in the case were the division
+is not perfect? In that case, an extra grid point was given to each processor up to the remainder, meaning that certain processors would have
+extra points to take care of. The local domain could then be calculated by adding 2 ghost cells to each local grid number to account for the 
+boundary conditions.
+
+The x positions of the grid were then placed in to an array for each rank; this was completed by first determining the first and last points of the
+local grid, excluding the boundary conditions. The boundary conditions could then be adding by stepping down from the first index and stepping up from
+the last index to account for these.
+
+For the excitation, the rho array was set to zero at first; only the non-zero values between 1/4 and 3/4 of the ALL of the points would be initialized with a non-zero
+value. The subsequent values were then put in the respective array for that particular processor, including the proper indices.
+
+The file naming system was modified such that there were 3 files output; thankfully, only one instance of ofstream was needed because it was run once
+independently by each processor, thus meaning that there was no need to open up multiple streams. There will be (n = size) number of files generated, each
+labelled dataFilenamex.out, where x is the rank.
+
+When printing, the guard cells were removed for the simple reason that, because of how communication between the processors was set up, the boundary value
+may not be 100% accurate as the cell doesn't calculate a value. For example, the grid cells must be calculated first, but one of the grid cells will be the
+boundary of another local grid calculated by another processor, and since the processors wait in between calculations, at first there will be no true values for 
+the boundaries as the values had yet to be calculated. (I may not be explaining this 100% right now, but my head is fuzzy so bear with me - we're almost done!)
+
+Communication was then set up between processors; it was made sure that no processor would communicate too far to the left or right (i.e. negative rank or a rank exceeding
+the total number of processors). Between messages, the calculation found the non-boundary values (the local grid values) and then the boundary values themselves; this was 
+then communicated, and the next calculation occured, etc. During all time steps but 0, there was a wait between communication for the calculation to occur, as MPI_Waitall
+was used (this part was taken right out of the second set of lecture slides on OpenMPI!) 
+
+From there, the program did its thing, and then MPI was closed before returning a value back to the shell.
+
+An interesting caveat I had: because of the way that the integer type rounds, certain step sizes (dx values) will result in a Floating Point Exception when calculating
+the nstep value; I was testing with small dx values of 3 and 4, and I couldn't get it to work until running it through DDT and seeing the problem. I am not very
+much more inclined in using DDT. 
+
+Lastly, the scaling analysis: Turning off all graphics and I/O, and using a dx of 0.002 and over 32 cores, I found that the shape of the 
+scaling plot is essentially exponential, albeit the efficiency isn't too great, as was expected (and told to us in the assignment itself). 
+With 1 processor, the walltime was about 53.5 s; at 32 processors, it was 3.07 s. It did cap out roughly at around 19 or 20 processors, and the efficiency,
+considering that you used a whopping 32 cores, was not improved as amazingly as one would expect. Still, an overall increase of a factor of 16 or so itself
+is not too bad, just not 32 times better as one would expect with maximum efficiency. This, however, makes sense to me, as an increase in the number of
+processors naturally leads to an increased amount of communications during the program's course. This is likely the most obvious bottleneck in regards
+to scaling.
+
+That's it!

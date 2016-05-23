@@ -1,0 +1,89 @@
+commit 1a02279a07c2b3980624298b0572eb368cc5598d
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 22:08:29 2016 -0500
+
+    Added a few more comments to wrap it up. Works on SciNet!
+
+commit 5c46bb8010e5b4452116d1fbecd12fdc36fcbb73
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 22:06:31 2016 -0500
+
+    Added a few more comments to main driver; fixed make file such that it works on both local and SciNet.
+
+commit 784c7ee8de5f1c66e3bdd60e04188678e56a9885
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 20:19:02 2016 -0500
+
+    Added a make file to compile to both a local machine and on SciNet.
+
+commit d5a9a62bf1e9527c3d334a24c23c0d3edc63a47e
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 19:50:35 2016 -0500
+
+    Changed name to driver file to 'main_driver' in lieu of 'mass_extension'.
+
+commit efc114fb4b9d934e239705e531abe2e7961a0053
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 19:49:44 2016 -0500
+
+    Added another implementation of the GSL root finder (Brent method) in to the main driver code. Prints to terminal.
+
+commit 82c429ff34f751fa94e4e45ba1a1a9b2f72f69aa
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 19:48:53 2016 -0500
+
+    Added full comments to all files.
+
+commit 60b9b21d2d2f0526505c6ebcfba79d72be233bb6
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 18:39:09 2016 -0500
+
+    Added a custom error check and removed the error handler from gsl.
+
+commit f82c68d20ae2c304f4dfa19332bd369e45dcfdbc
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 18:04:42 2016 -0500
+
+    Commented the f_all_min function.
+
+commit 0f7c111bb9553810af5de891d6dadee630db63a6
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 17:58:35 2016 -0500
+
+    Moved struct definition to potential energy function header file to remove repeat instances.
+
+commit 21c6b9d3bf07f403bdd5b6179b453cff9a4d9c8c
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 17:53:44 2016 -0500
+
+    Commented the mass extension script. Changed name of function to f_all_min in lieu of f_all_min2 to avoid confusion.
+
+commit 8fa1b24d41618626a09bc907a3228fe7aaf3ce0d
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 17:46:39 2016 -0500
+
+    Added fstream to output results of mass extension to text file. Will proceed to comment and clean up exisitng code.
+
+commit 9b963db154632aff4cb454bf2126ebcf909a24fa
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 25 17:33:42 2016 -0500
+
+    Created a driver for finding the mass extension. Code is currently working, albeit not commented. No output to file yet, only to terminal.
+
+commit 06cd3aac39493a5fd652f3697c68f24fdaac1111
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 24 13:36:01 2016 -0500
+
+    Began writing mass extension code utilizing f_all_min, spanning a range of mass values from 0 to 0.5. So far it is working, albeit it is printing the x position and energy of each minima alongside the list; I will move the print command to the driver code instead of containing it within f_all_min.
+
+commit a28ae08129a8dd253669a6a39d83c61011260937
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 24 13:11:21 2016 -0500
+
+    Written f_min_all function; included modules for the function and a temporary driver function that takes a mass value and returns the values of the minima (position, energy).
+
+commit c6e5b3107217e54375da80f672531d45cd81c776
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 17 18:37:24 2016 -0500
+
+    First commit. Made functions for potential energy of both spring and weight (modules and headers). Made temporary test driver file to see if functions work - and they do.

@@ -1,0 +1,17 @@
+Just a few notes on the submitted homework:
+
+To run properly, the files must be included within the same directory as the code.
+
+To compile, run 'make' and then run ./signal_analysis.
+
+For clarity: the highest_value.cc source code includes both the function for generating the N highest values of the results and the print function. 
+The power_spectrum_cc.cc source code contains both the function that calculates the power spectrum and the correlation coefficient. 
+
+Last notes:
+filename.cc - generates the file name to be used as a string for reading in data.
+file_reader.cc - reads the data based on a string.
+fftw.cc - computes the FFTW (FT) of the signal data.
+
+Et voila! Enjoy. I am really enjoying learning how to code in C++, especially when it deals with gravitational waves!
+
+*This was not tested on SciNet due to the size of the data files!*

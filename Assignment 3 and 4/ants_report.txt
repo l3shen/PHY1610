@@ -1,0 +1,256 @@
+Report comparing results of the original ants script versus my modularized version.
+Note: the scripts are currently being compiled on a virtual machine on my desktop computer as my Linux rig had
+met its end. Compiling times are generally slower as I had only allocated so much processing power and RAM to
+the virtual machine; however, the relative differences should still be relatively similar.
+
+For the original ants script, our times of interest are:
+Initialization of ant speeds - 0.0058 s
+Initialization of initial number of ants - 0.006597 s
+Simulation - 0.9892 s.
+Thus, the total time is 1.00 s. 
+
+For my modularized ants script, our times of interest are:
+Initialization of ant speeds - 0.005871 s
+Initialization of initial number of ants - 0.006563 s
+Simulation - 0.4987 s.
+Print time - 0.01839
+Thus, the total time is 0.530 s. 
+
+Interesting! Our original code is about a factor of 2 slower than the modular. Let's investigate:
+
+To profile, we included new tags in our make file:
+CPPFLAGS = -pg -gstabs -O1, etc.
+The full line that is included in the make file test routine is shown here (for compilation description):
+g++  -pg -gstabs  -o ants_test single_time_step.cc initial_speed.cc initial_amount.cc ants_test.cc -lboost_unit_test_framework
+Then I would just run 'make test' to make the test executable, ants_test.
+
+This is important - gprof would show some erratic results if the optimization was set to anything higher than
+-O1; it produced some strange timing profiles. However, at -O1, it seems to work as expected.
+
+According to our gprof output, compiling with 'gprof --line ants/ants_original gmon.out':
+
+For the original ants script -
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 50.19      0.04     0.04                             main (ants_original.cc:48 @ 400dcb)
+ 25.09      0.06     0.02                             main (ants_original.cc:65 @ 400f22)
+ 12.55      0.07     0.01                             main (ants_original.cc:68 @ 400f6e)
+ 12.55      0.08     0.01                             main (ants_original.cc:74 @ 400ffe)
+  0.00      0.08     0.00        6     0.00     0.00  elapsed_time() (ticktock.cc:32 @ 4010aa)
+  0.00      0.08     0.00        3     0.00     0.00  TickTock::tick() (ticktock.cc:45 @ 4010e0)
+  0.00      0.08     0.00        3     0.00     0.00  TickTock::silent_tock() const (ticktock.cc:57 @ 401102)
+  0.00      0.08     0.00        3     0.00     0.00  TickTock::tock(char const*) const (ticktock.cc:51 @ 401124)
+  0.00      0.08     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8TickTock4tickEv (ticktock.cc:62 @ 401218)
+  0.00      0.08     0.00        1     0.00     0.00  _GLOBAL__sub_I_main (ants_original.cc:81 @ 401081)
+
+The gprof output states that the code spends 100% of its time in the function 'main'. This is to be expected as this is the only function available in the code and hence we expect to see it spend all of its time here, although it is repeated many times (albeit when ignoring the --line flag, it shows up once).
+
+For the modified ants script - 
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 32.41      0.06     0.06                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:29 @ 40169d)
+ 11.78      0.08     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1298 @ 40163f)
+  8.84      0.09     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 4016cc)
+  8.84      0.11     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:37 @ 40174d)
+  8.84      0.12     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 401754)
+  5.89      0.13     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1063 @ 401661)
+  5.89      0.14     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1131 @ 40166d)
+  5.89      0.15     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:37 @ 401758)
+  5.89      0.16     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1766 @ 401a29)
+  2.95      0.17     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:26 @ 40167e)
+  2.95      0.17     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 401695)
+  0.00      0.17     0.00       40     0.00     0.00  Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:7 @ 4015c0)
+  0.00      0.17     0.00       40     0.00     0.00  Print(int, float&) (print.cc:6 @ 401dec)
+  0.00      0.17     0.00        6     0.00     0.00  elapsed_time() (ticktock.cc:32 @ 401b34)
+  0.00      0.17     0.00        3     0.00     0.00  ra::rarray<float, 2>::base(float* const*) (rarray:1757 @ 401598)
+  0.00      0.17     0.00        3     0.00     0.00  ra::rarray<float, 2>::init_data(int const*, int) (rarray:1482 @ 4014a4)
+  0.00      0.17     0.00        3     0.00     0.00  TickTock::tick() (ticktock.cc:45 @ 401b6a)
+  0.00      0.17     0.00        3     0.00     0.00  TickTock::silent_tock() const (ticktock.cc:57 @ 401b8c)
+  0.00      0.17     0.00        3     0.00     0.00  TickTock::tock(char const*) const (ticktock.cc:51 @ 401bae)
+  0.00      0.17     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z16Single_Time_StepRN2ra6rarrayIfLi2EEES2_S1_Rf (single_time_step.cc:42 @ 401a79)
+  0.00      0.17     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z5PrintiRf (print.cc:8 @ 401e90)
+  0.00      0.17     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8TickTock4tickEv (ticktock.cc:62 @ 401ca2)
+  0.00      0.17     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      0.17     0.00        1     0.00     0.00  Initial_Speed(ra::rarray<float, 2>&) (initial_speed.cc:5 @ 401aa2)
+  0.00      0.17     0.00        1     0.00     0.00  Initial_Amount(ra::rarray<float, 2>&, int) (initial_amount.cc:5 @ 401ccb)
+
+The gprof output shows that all of the time is split between the Single_Time_Step module, as it performs the brunt of the calculations. As expected, it is called 40 times for
+the 40 time steps, alongside print also being called 40 times (also expected). However, the print takes up no percentage of time relative to the single time step function. There
+are some leftover rarray functions (most likely from initialization or from using methods within the library) and interestingly the initial speed and initial amount steps take no time... It's time to dig deeper and take a look at no optimization on the modularized code.
+
+No optimization for modular code:
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ns/call  ns/call  name    
+  8.63      0.05     0.05  5069440     9.87     9.87  std::cos(float) (cmath:204 @ 40292d)
+  6.90      0.09     0.04  5069603     7.90     7.90  ra::rarray<float, 2>::base(float* const*)
+  6.90      0.13     0.04  5069560     7.90     7.90  ra::rarray<float, 2>::size() const (rarray:1063 @ 402ee2)
+  5.18      0.16     0.03                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:29 @ 4021de)
+  5.18      0.19     0.03                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:834 @ 402481)
+  5.18      0.22     0.03                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 40254d)
+  5.18      0.25     0.03                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:37 @ 4026c1)
+  4.31      0.28     0.03                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:834 @ 402192)
+  3.45      0.30     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 402133)
+  3.45      0.32     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:834 @ 4023a6)
+  3.45      0.34     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:34 @ 4023f2)
+  3.45      0.36     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:34 @ 4024cd)
+  3.45      0.38     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:834 @ 4025ac)
+  3.45      0.40     0.02                             ra::rarray<float, 2>::end() (rarray:1432 @ 402de4)
+  3.45      0.42     0.02                             ra::rarray<float, 2>::end() (rarray:1131 @ 402df4)
+  1.73      0.43     0.01  5069480     1.97     1.97  ra::rarray<float, 2>::end() (rarray:1131 @ 402dc6)
+  1.73      0.44     0.01                             Initial_Amount(ra::rarray<float, 2>&, int) (initial_amount.cc:27 @ 403700)
+  1.73      0.45     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:834 @ 402032)
+  1.73      0.46     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1373 @ 40206a)
+  1.73      0.47     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:18 @ 40207e)
+  1.73      0.48     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:834 @ 402288)
+  1.73      0.49     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1373 @ 4022c0)
+  1.73      0.50     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:30 @ 4022d4)
+  1.73      0.51     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 402347)
+  1.73      0.52     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 402422)
+  1.73      0.53     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:36 @ 4024e7)
+  1.73      0.54     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 402628)
+  1.73      0.55     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:28 @ 4026db)
+  1.73      0.56     0.01                             ra::rarray<float, 2>::fill(float const&) (rarray:1298 @ 4029c4)
+  1.73      0.57     0.01                             ra::rarray<float, 2>::fill(float const&) (rarray:1843 @ 4029fa)
+  1.73      0.58     0.01                             ra::rarray<float, 2>::rarray(int const*) (rarray:692 @ 402ee0)
+  0.86      0.58     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1373 @ 4021ca)
+  0.00      0.58     0.00  5069520     0.00     0.00  ra::Iterator<float>::Iterator(float*, int) (rarray:1897 @ 402fcc)
+  0.00      0.58     0.00  5069440     0.00     0.00  ra::Iterator<float>::operator++(int) (rarray:1811 @ 402e2c)
+  0.00      0.58     0.00  5069440     0.00     0.00  std::sin(float) (cmath:445 @ 402961)
+  0.00      0.58     0.00      200     0.00     0.00  std::_Iter_base<float*, false>::_S_base(float*) (stl_iterator_base_types.h:212 @ 403095)
+  0.00      0.58     0.00      123     0.00     0.00  ra::rarray<float, 2>::init_shallow(float const*, float* const*, int*, int*)
+  0.00      0.58     0.00      120     0.00     0.00  std::_Niter_base<float*>::iterator_type std::__niter_base<float*>(float*) (stl_algobase.h:277 @ 4030ac)
+  0.00      0.58     0.00       80     0.00     0.00  std::_Miter_base<float*>::iterator_type std::__miter_base<float*>(float*) (stl_algobase.h:288 @ 403019)
+  0.00      0.58     0.00       43     0.00     0.00  ra::rarray<float, 2>::init_parray(float*, int const*)
+  0.00      0.58     0.00       43     0.00     0.00  ra::rarray<float, 2>::new_except_base(float*, int const*)
+  0.00      0.58     0.00       43     0.00     0.00  ra::rarray<float, 2>::init_data(int const*, int)
+  0.00      0.58     0.00       40     0.00     0.00  Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:7 @ 401f43)
+  0.00      0.58     0.00       40     0.00     0.00  Print(int, float&) (print.cc:6 @ 40382c)
+  0.00      0.58     0.00       40     0.00     7.90  ra::rarray<float, 2>::fill(float const&) (rarray:1298 @ 402996)
+  0.00      0.58     0.00       40     0.00     7.90  ra::rarray<float, 2>::begin() (rarray:1101 @ 402d6a)
+  0.00      0.58     0.00       40     0.00     0.00  ra::rarray<float, 2>::rarray(int const*) (rarray:683 @ 402e7c)
+  0.00      0.58     0.00       40     0.00     0.00  ra::rarray<float, 2>::copy() const (rarray:990 @ 402a0e)
+  0.00      0.58     0.00       40     0.00     0.00  float* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<float>(float const*, float const*, float*) (stl_algobase.h:368 @ 403101)
+  0.00      0.58     0.00       40     0.00     0.00  float* std::__copy_move_a<false, float*, float*>(float*, float*, float*) (stl_algobase.h:379 @ 4030cb)
+  0.00      0.58     0.00       40     0.00     0.00  float* std::__copy_move_a2<false, float*, float*>(float*, float*, float*) (stl_algobase.h:424 @ 403038)
+  0.00      0.58     0.00       40     0.00     0.00  float* std::copy<float*, float*>(float*, float*, float*) (stl_algobase.h:450 @ 402f32)
+  0.00      0.58     0.00        6     0.00     0.00  elapsed_time() (ticktock.cc:32 @ 4033a8)
+  0.00      0.58     0.00        3     0.00     0.00  print(char const*, double) (ticktock.cc:23 @ 4032de)
+  0.00      0.58     0.00        3     0.00     0.00  ra::rarray<float, 2>::rarray(int, int) (rarray:569 @ 401b5a)
+  0.00      0.58     0.00        3     0.00     0.00  TickTock::tick() (ticktock.cc:45 @ 4033fc)
+  0.00      0.58     0.00        3     0.00     0.00  TickTock::silent_tock() const (ticktock.cc:57 @ 403466)
+  0.00      0.58     0.00        3     0.00     0.00  TickTock::tock(char const*) const (ticktock.cc:51 @ 403424)
+  0.00      0.58     0.00        3     0.00     0.00  std::setprecision(int) (iomanip:193 @ 40350a)
+  0.00      0.58     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z16Single_Time_StepRN2ra6rarrayIfLi2EEES2_S1_Rf
+  0.00      0.58     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z5PrintiRf (print.cc:8 @ 4038c9)
+  0.00      0.58     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8TickTock4tickEv
+  0.00      0.58     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      0.58     0.00        1     0.00     0.00  Initial_Speed(ra::rarray<float, 2>&) (initial_speed.cc:5 @ 40316b)
+  0.00      0.58     0.00        1     0.00     0.00  Initial_Amount(ra::rarray<float, 2>&, int) (initial_amount.cc:5 @ 40351f)
+  0.00      0.58     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int) (ants.cc:57 @ 401afd)
+  0.00      0.58     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int) (single_time_step.cc:42 @ 4028d1)
+  0.00      0.58     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int) (ticktock.cc:62 @ 4034ae)
+  0.00      0.58     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int) (print.cc:8 @ 403887)
+
+The gprof output shows that the majority of time is spent in the Single_time_step function, as expected, as that is what performs the primary calculation.
+There are also residuals and functions related to rarray, such as Iterator and potentially the included rarray.fill() and .copy() methods. Interestingly
+we also see that a lot of time is spent in the sin and cos functions (with a ludicrously high number of calls!) but the initial speed function itself t
+akes 0% of computing them - that implies that the initialization does take some time, but it's not explicitly stated as the initial_speed function.
+As a whole, this is what likely leads to the time taking longer for the modularized code versus that of the original - the optimization smooths out
+these functions and their dependencies.
+
+(The non-optimized ants original output is in unit_test_results.txt).
+
+Furthermore, without optimization, the modularized code is much slower than the original code!
+
+Lastly, our test, which checks that the new number of ants after an iteration is less than the number of ants beforehand results in a pass!
+Running 1 test case...
+
+*** No errors detected
+
+Potential bottlenecks in this script:
+I think that maybe not deleting arrays after finishing with them is slowing the system down, as the gprof output
+for the modularized code shows a function name with 'rarray' present (although what it is I am not sure).
+Otherwise, I think there are not too many bottlenecks that I can see; some suggestions would be that replacing for loops
+to fill arrays with rarray objects (as I had already done, i.e. using rarray.fill(); this removes some unnecessary
+lines of code) actually causes some bottleneck, as those functions show up as taking time in the non-optimized gprof output. Lastly, one could avoid
+initialization of variables within for loops so they are not initialized every iteration. 
+
+Lastly, it seems that sin and cos functions take some time - perhaps setting the velocity as a constant and not computing it within the code
+may speed things up and minimize overall computing time.
+
+I have uploaded my files on SciNet, ran, and profiled them. For comparison:
+
+Timing: Ants simulation time is 0.3297 s vs ants original simulation time is 0.3317 s - almost the same! What a change!
+
+Here are the gprof outputs from running on SciNet:
+The original ants script - 
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 30.10      0.03     0.03                             main (ants_original.cc:65 @ 400fd5)
+ 30.10      0.06     0.03                             main (ants_original.cc:68 @ 401021)
+ 20.07      0.08     0.02                             main (ants_original.cc:48 @ 400e7e)
+ 10.03      0.09     0.01                             main (ostream:587 @ 400f37)
+ 10.03      0.10     0.01                             main (ants_original.cc:62 @ 400fc3)
+  0.00      0.10     0.00        6     0.00     0.00  elapsed_time() (ticktock.cc:32 @ 401160)
+  0.00      0.10     0.00        3     0.00     0.00  TickTock::tick() (ticktock.cc:45 @ 401196)
+  0.00      0.10     0.00        3     0.00     0.00  TickTock::silent_tock() const (ticktock.cc:57 @ 4011b8)
+  0.00      0.10     0.00        3     0.00     0.00  TickTock::tock(char const*) const (ticktock.cc:51 @ 4011da)
+  0.00      0.10     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8TickTock4tickEv (ticktock.cc:62 @ 4012ce)
+  0.00      0.10     0.00        1     0.00     0.00  _GLOBAL__sub_I_main (ants_original.cc:81 @ 401134)
+
+Again, same functions and 100% of time spent in main, as expected.
+
+The modularized ants script -
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 18.78      0.03     0.03                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:36 @ 4017de)
+ 12.52      0.05     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:36 @ 4017b6)
+ 12.52      0.07     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1373 @ 4017f2)
+ 12.52      0.09     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:37 @ 401808)
+  9.39      0.11     0.02                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:18 @ 4016a1)
+  6.26      0.12     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1298 @ 4016ef)
+  6.26      0.13     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:29 @ 40174d)
+  6.26      0.14     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:34 @ 401792)
+  6.26      0.15     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:30 @ 4017cc)
+  6.26      0.16     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (rarray:1326 @ 4017ec)
+  3.13      0.16     0.01                             Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:17 @ 4016b2)
+  0.00      0.16     0.00       40     0.00     0.00  Single_Time_Step(ra::rarray<float, 2>&, ra::rarray<float, 2>&, ra::rarray<float, 2>, float&) (single_time_step.cc:7 @ 401670)
+  0.00      0.16     0.00       40     0.00     0.00  Print(int, float&) (print.cc:6 @ 401ea4)
+  0.00      0.16     0.00        6     0.00     0.00  elapsed_time() (ticktock.cc:32 @ 401be8)
+  0.00      0.16     0.00        3     0.00     0.00  ra::rarray<float, 2>::base(float* const*) (rarray:1757 @ 401654)
+  0.00      0.16     0.00        3     0.00     0.00  ra::rarray<float, 2>::init_data(int const*, int) (rarray:1482 @ 401560)
+  0.00      0.16     0.00        3     0.00     0.00  TickTock::tick() (ticktock.cc:45 @ 401c1e)
+  0.00      0.16     0.00        3     0.00     0.00  TickTock::silent_tock() const (ticktock.cc:57 @ 401c40)
+  0.00      0.16     0.00        3     0.00     0.00  TickTock::tock(char const*) const (ticktock.cc:51 @ 401c62)
+  0.00      0.16     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z16Single_Time_StepRN2ra6rarrayIfLi2EEES2_S1_Rf (single_time_step.cc:42 @ 401b29)
+  0.00      0.16     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z5PrintiRf (print.cc:8 @ 401f48)
+  0.00      0.16     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8TickTock4tickEv (ticktock.cc:62 @ 401d56)
+  0.00      0.16     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      0.16     0.00        1     0.00     0.00  Initial_Speed(ra::rarray<float, 2>&) (initial_speed.cc:5 @ 401b54)
+  0.00      0.16     0.00        1     0.00     0.00  Initial_Amount(ra::rarray<float, 2>&, int) (initial_amount.cc:5 @ 401d80)
+
+We see a similar interpretation of results compared to what we have found on the local machine. So far so good!
+
+The result of our test program -
+Running 1 test case...
+
+*** No errors detected
+
+And voila! Sorry for the lengthy report. The job ID for the SciNet work is 34031154.gpc-sched-ib0.
+
+

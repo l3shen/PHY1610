@@ -1,0 +1,143 @@
+commit c7e2175016749e8c7f73f6eb32f490a049c8fa38
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Apr 7 22:27:12 2016 -0400
+
+    Did scaling plot analysis; finished code (?) - will start report now.
+
+commit 6917bc92ff8e903b48ebf3a055a73b083a3e59d1
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Apr 7 20:54:33 2016 -0400
+
+    Finished commenting and cleaning up code.
+
+commit 6d47a4b6c4e8133ea96cd8b60c4d563ec172a5ac
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Apr 7 20:02:27 2016 -0400
+
+    Finally resolved the multiple lines on plot issue; error in initializing the length of each local domain. Works now.
+
+commit ca025f673283f8bfb2c7f2a0b2a0cd8d0f321daf
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Apr 7 17:33:19 2016 -0400
+
+    Finally managed to get parallel output working; second rank seems to output an extra vector of 0's at random time steps?
+
+commit c1ea970217444eaf2b7c1de183ffa60676c4c117
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Apr 7 03:15:01 2016 -0400
+
+    Began adding the finale phase following the Finite Difference example in the lecture slides pt. 2. Going to sleep now because it's late.
+
+commit 8e4cb995ec6f5c5fd9612e76c77a9b247f9cc091
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 23:35:07 2016 -0400
+
+    Rho now works for each rank.
+
+commit f75ab210607aeb1a03943bc69531721f92d18932
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 23:06:29 2016 -0400
+
+    Modified excitation part of code to accomodate the different CPUs; now a vector for rho is created for each rank.
+
+commit 0f4b1b88466f058086f39d07bc1a26231e08b745
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 22:31:03 2016 -0400
+
+    Fixed x vector; now generates proper x values including ghost or boundary cells.
+
+commit c4fbc9aa6ccf4fd64eddede13443714a73643024
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 21:44:52 2016 -0400
+
+    Changed file I/O naming parameters such that one file is printed for each rank.
+
+commit ab8e3c21ecd38eca74adc420ea10549c4290d862
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 20:11:57 2016 -0400
+
+    Defined the local boundary conditions; will test now.
+
+commit 5d5283dc18a166b19dc0833b500a384e64dc8332
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 19:38:12 2016 -0400
+
+    Did a bit of tidying up; seems to compile and run now at least.
+
+commit b2b9eea4be2b040e8538a6e6a3740ceed5bd48c0
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 19:26:59 2016 -0400
+
+    Finished part one of the question; fixed a few errors about calculating ngrid_local.
+
+commit c4e44c05a3b8405c61f784ea205aff1f386d9cbb
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 19:17:58 2016 -0400
+
+    Calculated the local ngrid value for each chunk being calculated by the processor. Fixed a small error in the original code when calculating ngrid.
+
+commit bac8224f2234c53982631beca287ea6949b79055
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 13:23:15 2016 -0400
+
+    Added in integers that calculate the local number divided by the number of points, and the remainder (the numober of points divided by size) - this is to be able to track whether or not a case is is not divisible.
+
+commit 19921e232f74341f89c9f971407153a2ad58c5af
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Apr 6 11:04:59 2016 -0400
+
+    Rearranged MPI initialization parts such that it made more sense. Tested; runs OK.
+
+commit bb4acd7cefba427ab5a18daff6da2263cef5528e
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Apr 5 20:43:19 2016 -0400
+
+    Implemented MPI library; ran a test following the first point of the assignment. No useful information was gathered, but it was tested and the program compiled and ran (with graphics).
+
+commit 2f5cab8dc2e1db2e607a245ee69777a0a277e560
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 31 22:08:38 2016 -0400
+
+    Finished the assignment.
+
+commit 517191a56a29cc79462cef074b87a2e541ea3b71
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 31 20:14:52 2016 -0400
+
+    Changed name of parallelized code - typo present.
+
+commit 2bef575d849f81c452906a23e3d9906689caec1c
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Mar 31 20:10:59 2016 -0400
+
+    Parallelized the second part of the assignment; both multi-file and single-file output.
+
+commit 38412268f7000d28a19e591f9658d6496145247c
+Author: Kamil Krawczyk <kamilk@gpc-f101n084-ib0.(none)>
+Date:   Wed Mar 30 21:34:16 2016 -0400
+
+    Parallelized the time evolution; runs now at 1.05s vs the original 2.5s.
+
+commit a4b8d7f3e5dbd6c54d51702a7f9f189f8deca0ea
+Author: Kamil Krawczyk <kamilk@gpc-f101n084-ib0.(none)>
+Date:   Wed Mar 30 20:57:26 2016 -0400
+
+    Added the requisite tag for compilation for OpenMP.
+
+commit 599fbba0889fa4be4e299cb182214fd6d1aec2bd
+Author: Ramses van Zon <rzon@scinet.utoronto.ca>
+Date:   Thu Mar 24 18:21:17 2016 -0400
+
+    Removed data file and executable
+
+commit 49606f81c0ee823335ffb60be68fcbe2eca6e675
+Author: Ramses van Zon <rzon@scinet.utoronto.ca>
+Date:   Thu Mar 24 18:17:56 2016 -0400
+
+    Now homework 9 for PHY1016 in 2016
+
+commit fe1eb33297c1617538a0636ab2744eac8728cf79
+Author: Ramses van Zon <rzon@scinet.utoronto.ca>
+Date:   Thu Mar 19 14:03:24 2015 -0400
+
+    Homework 2 of the High Performance Scientific Computing mini-course, using a 1d damped wave equation that is to be openmp-ed

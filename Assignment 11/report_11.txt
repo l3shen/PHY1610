@@ -1,0 +1,43 @@
+SciNet Assignment 11 Report:
+
+The code was successfully converted to have binary output. First, let's compare relative times:
+
+Original serial code walltime: 38.7351 s
+Binary output code walltime: 8.03199 s
+
+Therefore, the binary code has an approximately five-fold decrease in wall time, meaning it definitely is faster.
+Surprisingly, there's another huge advantage in regards to the relative file sizes:
+
+Serial code text output: 313.52 MB
+Binary code .nc file output: 74.78 MB
+
+Not only did we reduce the wall time by roughly five times, we decreased the file size by almost five times as well!
+It seems that NetCDF is advantageous for this code, which deals with many, many different time steps (as the waveparams.txt
+file was modified from our last assignment). However, the caveat is dealing with the resultant .nc binary file; once can view
+it in a dedicated viewer, or dump it using ncview, but I'll discuss more on that later.
+
+What was done in the code:
+First, the NetCDF variables were initialized, including simple arrays for starting and stopping counters for the nc_put_vara_TYPE
+function, which required two calls be made to a stop and start in order to fill values in to an array over time steps. However,
+since the position was found independently and not within the big time step loop, it was only necessary to use the same function
+given to us as an example in the lecture slides, nc_put_var_TYPE, as there was no need to start and stop counting over a loop.
+
+Dimensions were given to the stop and start counters to keep track of where to start in regards to the dimension when adding in to a
+multidimensional array in NetCDF. This was adopted from the 4D example on the NetCDF documentation website.
+
+After initializing a file and defining dimensions for both the rho array (2D) and the time and position arrays (1D), the time array
+was filled prior to the time loop; in the time loop, if not outputting graphics, the rho array and the time array were both filled,
+using the counters that were made specifically for them.
+
+After running and generating the data set, ./ncview (from the example) was used to take a look at the data. The rho data successfully
+printed, resulting in familiar shapes of the curve upon analysis. The other two variables in the data file, both position and time, are 1D
+linear plots, as expected. 
+
+Overall, my conclusions with using NetCDF are simple; if I want to reduce my file footprint for a large dataset, then binary output
+seems like a reasonable choice; however, there leads to the issue of extended post-processing. Naturally, inputting binary in to
+MATLAB or other processing software may not be as intuitive as adding space or comma delimited etc. files. Lastly, another pro
+with the use of binary output is the significantly reduced walltime; this is, in most circumstances, a plus!
+
+Thank you Marcelo and Ramses for a great course this semester. I look forward to taking more SciNet courses throughout the course of my PhD.
+
+

@@ -1,0 +1,149 @@
+commit 548e6ac7acfb397f5df9f5ad8671f8b8027d5a7b
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 11 17:24:35 2016 -0500
+
+    Added report and generated git log file. Set optimization to -o1 for final submission.
+
+commit 2620c80a06f94a12d5f0b599eedd06635461a986
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 11 17:20:47 2016 -0500
+
+    Fixed test such that it tested for < clause instead of <= clause (which would not be correct).
+
+commit 9a929e417a6d302c69e7c4bfd21c954ba9d27f41
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 11 01:13:43 2016 -0500
+
+    Removed tag for -std=c++11 as could not compile on SciNet. Uploaded to SciNet as well.
+
+commit 2105f704198c1aaae6b60bbccde0a16caeedcea7
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 11 00:35:52 2016 -0500
+
+    Added a test part to the make file.
+
+commit 6dade53d9e06f0f244755c0ea5c25d2aa5331605
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 10 23:58:35 2016 -0500
+
+    Fixed makefile such that compilation for the original ants worked properly - gprof now showing 100% time spent in main, as expected.
+
+commit 78b316d264759e51eec450e73714f159095cc3b5
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 10 23:43:56 2016 -0500
+
+    Fixed issue with makefile not applying profiling flags to final executable.
+
+commit 0753233b7e1f8444a474130ea63c9cf5adc74bac
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 10 23:22:42 2016 -0500
+
+    Fully modularized to what is expected; boost test code created. No errors detected in test!
+
+commit 28f1cae2d4df8d905e7afd2fdc35207b7c50883a
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 10 19:29:11 2016 -0500
+
+    Finally modularized code properly. Time to boost it up.
+
+commit bd2babb0c57f2652489a6c4ce8b20b89ecd9e9d9
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Feb 9 16:42:34 2016 -0500
+
+    Removed unnecessary constants in main driver code.
+
+commit c60319049c81972cae2f3ef938ad37ae79e9ac93
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Feb 9 16:09:11 2016 -0500
+
+    Improved module for single_time_step to ensure that it is working better. Now the module is truly for a single time step instead of having all of the time steps in it.
+
+commit 87e0ce073aebc952185fc6ee75cee75574bbc6dd
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Feb 9 16:03:09 2016 -0500
+
+    Renamed simulation to single_time_step; will continue to make module a little more efficient.
+
+commit 8a13448234c4f91aa02196de0d353c8285761beb
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Tue Feb 9 15:54:01 2016 -0500
+
+    Added newly modularized code; simulation is now a single time step. Makefile has been appended to remove unnecessary tags.
+
+commit 1ee520022b2b61fd8906d8f459db44efb4855d50
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 4 00:34:21 2016 -0500
+
+    Added ticktock functionality for the print/output function of my modularized code.
+
+commit 9d40282d76c0d7b5161b4cdee157e91175ff9f61
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Thu Feb 4 00:07:55 2016 -0500
+
+    Updated with new ticktock output names that are identical for both the modular and the original version. Modular version is faster than the original version. Cool!
+
+commit 789471ef4742b138f7d8886f7d653c4c016daf90
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 23:54:37 2016 -0500
+
+    Added ticktock library to modularized code; only for total time.
+
+commit 807fce5c9c8512158e1e4d071c01aa47f6dc621d
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 23:30:08 2016 -0500
+
+    Rewrote some of the timing commands for the original code; time outputs for both initialization steps and the overall simulation.
+
+commit 14bdc07872d2fa0c05f25826a30a287113f2a762
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:47:42 2016 -0500
+
+    Added a make file to compile both the modularized code and the original code.
+
+commit 4f447141016f0c319e64fdda8d7c25bd197d21f1
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:43:40 2016 -0500
+
+    Added the modularized code to the folder.
+
+commit 1f48adef7ddd9d4d5453ddc4feba4803b77a0e2b
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:28:04 2016 -0500
+
+    Testing the final counting of the new total number of ants at the end of the simulation loop.
+
+commit 4478a8b1526320c403260a171ea1795afd6db0d9
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 22:16:56 2016 -0500
+
+    Tested the calculation time of the new number of ants based on those that walk and those that stay.
+
+commit bae0262598457eb5b7899f513ec369959039856f
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 21:59:34 2016 -0500
+
+    Added ticktock to monitor the first part of the simulation - totaling the ants.
+
+commit c904e604696fcb0c457df403d4fc42c617e5e8e5
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 21:11:53 2016 -0500
+
+    Added ticktock monitoring to both initialization steps and the overal simulation.
+
+commit d7f33f705e71676b7cc8a2d0c439a536722b5226
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 20:59:10 2016 -0500
+
+    Implemented ticktock library in to original code. Compiling without make file for testing purposes.
+
+commit ddae15b1b7859d7cbe75fa9ca2f1588fad6adc7a
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 20:54:15 2016 -0500
+
+    Added ticktock library files; will begin to implement in original to test.
+
+commit 04a14028eb07beb5a0c2e6545aadcb0f9f8b35fa
+Author: Kamil Krawczyk <kamilk@lphys.chem.utoronto.ca>
+Date:   Wed Feb 3 20:53:11 2016 -0500
+
+    Git initialized; original ants script added.
